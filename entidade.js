@@ -128,7 +128,6 @@ function desenhar() {
     ctx.font = '20px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(`PONTOS: ${pontos}`, 10, 30);
-
     if (jogoAcabou) {
         ctx.fillStyle = 'white';
         ctx.font = '40px Arial';
