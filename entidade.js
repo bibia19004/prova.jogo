@@ -57,3 +57,14 @@ class Alien extends Entidade {
         this.y += this.vel;
     }
 }
+const jogador = new Jogador(canvas.width / 2 - 20, canvas.height - 40);
+
+function atirar() {
+    const agora = Date.now();
+    if (agora - tempoUltimoTiro > 300) {
+        const xTiro = jogador.x + jogador.largura / 2 - 2.5;
+        tiros.push(new Tiro(xTiro, jogador.y));
+        tempoUltimoTiro = agora;
+        somTiro.play();
+    }
+}
