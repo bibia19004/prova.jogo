@@ -1,3 +1,43 @@
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+let jogoAcabou = false;
+let pontos = 0;
+let velocidadeAlien = 1;
+let intervaloSpawn = 2000;
+let tempoUltimoTiro = 0;
+let teclas = {};
+const tiros = [];
+const aliens = [];
+
+const botaoReiniciar = document.createElement("button");
+botaoReiniciar.innerText = "Recomeçar";
+botaoReiniciar.style.cssText = `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    padding: 10px 20px;
+    background-color: lime;
+    border: none;
+    cursor: pointer;
+    display: none;
+`;
+document.body.appendChild(botaoReiniciar);
+
+botaoReiniciar.addEventListener('click', () => {
+    jogoAcabou = false;
+    pontos = 0;
+    tiros.length = 0;
+    aliens.length = 0;
+    jogador.x = canvas.width / 2 - jogador.largura / 2;
+    botaoReiniciar.style.display = 'none';
+    loop();
+});
+
+document.addEventListener('keydown', (e) => teclas[e.key] = true);
+document.addEventListener('keyup', (e) => teclas[e.key] = false);
 class Entidade {
     constructor(x, y, largura, altura, cor) {
         this.x = x;
