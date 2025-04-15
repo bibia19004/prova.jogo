@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+  }
+  
+  canvas {
+    border: 2px solid white;
+    background-color: black;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: lime;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #32CD32;
+  }
+  
