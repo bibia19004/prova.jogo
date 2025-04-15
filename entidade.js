@@ -68,3 +68,7 @@ function atirar() {
         somTiro.play();
     }
 }
+function criarAlien() {
+    const x = Math.random() * (canvas.width - 40);
+    aliens.push(new Alien(x, 0, velocidadeAlien));
+}
