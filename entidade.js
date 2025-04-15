@@ -10,6 +10,10 @@ let teclas = {};
 const tiros = [];
 const aliens = [];
 
+const somTiro = new Audio('sounds/tiro.mp3');
+const somDerrota = new Audio('sounds/derrota.mp3');
+
+// Criar botão de reinício
 const botaoReiniciar = document.createElement("button");
 botaoReiniciar.innerText = "Recomeçar";
 botaoReiniciar.style.cssText = `
@@ -38,6 +42,8 @@ botaoReiniciar.addEventListener('click', () => {
 
 document.addEventListener('keydown', (e) => teclas[e.key] = true);
 document.addEventListener('keyup', (e) => teclas[e.key] = false);
+
+// Entidades
 class Entidade {
     constructor(x, y, largura, altura, cor) {
         this.x = x;
@@ -66,6 +72,7 @@ class Entidade {
         );
     }
 }
+
 class Jogador extends Entidade {
     constructor(x, y) {
         super(x, y, 40, 40, 'lime');
@@ -77,6 +84,7 @@ class Jogador extends Entidade {
         this.x = Math.max(0, Math.min(canvas.width - this.largura, this.x));
     }
 }
+
 class Tiro extends Entidade {
     constructor(x, y) {
         super(x, y, 5, 10, 'white');
@@ -87,6 +95,7 @@ class Tiro extends Entidade {
         this.y -= this.vel;
     }
 }
+
 class Alien extends Entidade {
     constructor(x, y, vel) {
         super(x, y, 40, 40, 'red');
@@ -97,8 +106,10 @@ class Alien extends Entidade {
         this.y += this.vel;
     }
 }
+
 const jogador = new Jogador(canvas.width / 2 - 20, canvas.height - 40);
 
+// Funções
 function atirar() {
     const agora = Date.now();
     if (agora - tempoUltimoTiro > 300) {
@@ -108,10 +119,12 @@ function atirar() {
         somTiro.play();
     }
 }
+
 function criarAlien() {
     const x = Math.random() * (canvas.width - 40);
     aliens.push(new Alien(x, 0, velocidadeAlien));
 }
+
 setInterval(() => {
     if (!jogoAcabou) criarAlien();
 }, intervaloSpawn);
@@ -134,9 +147,12 @@ function atualizar() {
         intervaloSpawn = Math.max(800, intervaloSpawn - 20);
     }
 
+    // Remover tiros fora da tela
     for (let i = tiros.length - 1; i >= 0; i--) {
         if (tiros[i].y + tiros[i].altura < 0) tiros.splice(i, 1);
     }
+
+    // Verificar colisões
     for (let i = aliens.length - 1; i >= 0; i--) {
         const alien = aliens[i];
 
@@ -168,6 +184,7 @@ function desenhar() {
     ctx.font = '20px Arial';
     ctx.textAlign = 'left';
     ctx.fillText(`PONTOS: ${pontos}`, 10, 30);
+
     if (jogoAcabou) {
         ctx.fillStyle = 'white';
         ctx.font = '40px Arial';
