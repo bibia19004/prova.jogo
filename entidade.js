@@ -72,3 +72,28 @@ function criarAlien() {
     const x = Math.random() * (canvas.width - 40);
     aliens.push(new Alien(x, 0, velocidadeAlien));
 }
+setInterval(() => {
+    if (!jogoAcabou) criarAlien();
+}, intervaloSpawn);
+
+let contadorDificuldade = 0;
+
+function atualizar() {
+    if (jogoAcabou) return;
+
+    jogador.mover();
+
+    if (teclas[' ']) atirar();
+
+    tiros.forEach(t => t.atualizar());
+    aliens.forEach(a => a.atualizar());
+
+    contadorDificuldade++;
+    if (contadorDificuldade % 6000 === 0) {
+        velocidadeAlien += 0.2;
+        intervaloSpawn = Math.max(800, intervaloSpawn - 20);
+    }
+
+    for (let i = tiros.length - 1; i >= 0; i--) {
+        if (tiros[i].y + tiros[i].altura < 0) tiros.splice(i, 1);
+    }
