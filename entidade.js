@@ -47,3 +47,13 @@ class Tiro extends Entidade {
         this.y -= this.vel;
     }
 }
+class Alien extends Entidade {
+    constructor(x, y, vel) {
+        super(x, y, 40, 40, 'red');
+        this.vel = vel;
+    }
+
+    atualizar() {
+        this.y += this.vel;
+    }
+}
