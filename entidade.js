@@ -26,3 +26,14 @@ class Entidade {
         );
     }
 }
+class Jogador extends Entidade {
+    constructor(x, y) {
+        super(x, y, 40, 40, 'lime');
+    }
+
+    mover() {
+        if (teclas['ArrowLeft']) this.x -= 3;
+        if (teclas['ArrowRight']) this.x += 3;
+        this.x = Math.max(0, Math.min(canvas.width - this.largura, this.x));
+    }
+}
