@@ -97,3 +97,54 @@ function atualizar() {
     for (let i = tiros.length - 1; i >= 0; i--) {
         if (tiros[i].y + tiros[i].altura < 0) tiros.splice(i, 1);
     }
+    for (let i = aliens.length - 1; i >= 0; i--) {
+        const alien = aliens[i];
+
+        if (alien.colidiuCom(jogador) || alien.y + alien.altura >= canvas.height) {
+            jogoAcabou = true;
+            somDerrota.play();
+            botaoReiniciar.style.display = 'block';
+            break;
+        }
+
+        for (let j = tiros.length - 1; j >= 0; j--) {
+            if (tiros[j].colidiuCom(alien)) {
+                aliens.splice(i, 1);
+                tiros.splice(j, 1);
+                pontos += 10;
+                break;
+            }
+        }
+    }
+}
+
+function desenhar() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    jogador.desenhar();
+    tiros.forEach(t => t.desenhar());
+    aliens.forEach(a => a.desenhar());
+
+    ctx.fillStyle = 'white';
+    ctx.font = '20px Arial';
+    ctx.textAlign = 'left';
+    ctx.fillText(`PONTOS: ${pontos}`, 10, 30);
+
+    if (jogoAcabou) {
+        ctx.fillStyle = 'white';
+        ctx.font = '40px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText("GAME OVER", canvas.width / 2, canvas.height / 5 - 20);
+        ctx.font = '24px Arial';
+        ctx.fillText(`PONTUAÇÃO FINAL: ${pontos}`, canvas.width / 2, canvas.height / 4 + 20);
+    }
+}
+
+function loop() {
+    atualizar();
+    desenhar();
+    if (!jogoAcabou) {
+        requestAnimationFrame(loop);
+    }
+}
+
+loop();
