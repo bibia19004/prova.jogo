@@ -37,3 +37,13 @@ class Jogador extends Entidade {
         this.x = Math.max(0, Math.min(canvas.width - this.largura, this.x));
     }
 }
+class Tiro extends Entidade {
+    constructor(x, y) {
+        super(x, y, 5, 10, 'white');
+        this.vel = 8;
+    }
+
+    atualizar() {
+        this.y -= this.vel;
+    }
+}
